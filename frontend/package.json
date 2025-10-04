@@ -16,11 +16,12 @@
     "googleapis": "^161.0.0",
     "lucide-react": "^0.544.0",
     "mapbox-gl": "^3.15.0",
-    "next": "15.5.4",
+    "next": "^15.5.4",
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "react-map-gl": "^8.0.4",
-    "recharts": "^3.2.1"
+    "recharts": "^3.2.1",
+    "tailwind": "^2.3.1"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
@@ -28,7 +29,7 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "eslint": "^9",
+    "eslint": "^9.37.0",
     "eslint-config-next": "15.5.4",
     "tailwindcss": "^4",
     "typescript": "^5"
