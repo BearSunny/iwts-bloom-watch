@@ -2,7 +2,10 @@
 import { useEffect, useRef, useState } from "react";
 import MapboxDraw from "@mapbox/mapbox-gl-draw";
 import mapboxgl from "mapbox-gl";
-import axios from 'axios';
+import "./map.css";
+import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
+import axios from "axios";
+
 
 mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
 
@@ -135,15 +138,27 @@ export default function BloomingMap({ compareMode, onResetCompareMode }) {
         type: "circle",
         source: sourceId,
         paint: {
-          "circle-radius": ["interpolate", ["linear"], ["get", "intensity"], 0, 2, 1, 10],
+          "circle-radius": [
+            "interpolate",
+            ["linear"],
+            ["get", "intensity"],
+            0,
+            2,
+            1,
+            10,
+          ],
           "circle-color": [
             "interpolate",
             ["linear"],
             ["get", "intensity"],
-            0, "#60a5fa",
-            0.3, "#facc15",
-            0.6, "#22c55e",
-            1, "#15803d",
+            0,
+            "#60a5fa",
+            0.3,
+            "#facc15",
+            0.6,
+            "#22c55e",
+            1,
+            "#15803d",
           ],
           "circle-opacity": 0.6,
           "circle-blur": 0.7,
@@ -167,12 +182,29 @@ export default function BloomingMap({ compareMode, onResetCompareMode }) {
     };
 
     // Always create the left map
-    leftMapRef.current = createMap(leftMapContainer.current);
+    const leftMap = createMap(leftMapContainer.current);
+    leftMapRef.current = leftMap;
+    leftMapRef.current.addControl(
+      new MapboxGeocoder({
+        accessToken: mapboxgl.accessToken,
+        useBrowserFocus: true,
+        mapboxgl: mapboxgl,
+      }),
+      "top-left"
+    );
 
     // Create right map for global compare
     if (globalCompareMode && rightMapContainer.current) {
-      rightMapRef.current = createMap(rightMapContainer.current);
-    }
+      const rightMap = createMap(rightMapContainer.current);
+      rightMapRef.current = rightMap;
+      rightMapRef.current.addControl(
+        new MapboxGeocoder({
+          accessToken: mapboxgl.accessToken,
+          useBrowserFocus: true,
+          mapboxgl: mapboxgl,
+        }),
+        "top-left"
+      );
 
     // Point comparison click handler
     const clickHandler = async (e) => {
@@ -328,7 +360,8 @@ export default function BloomingMap({ compareMode, onResetCompareMode }) {
       {!globalCompareMode && !pointCompareMode && ndviData.length > 0 && (
         <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-white/80 px-4 py-2 rounded-lg shadow">
           <p className="text-sm font-semibold">
-            📅 {ndviData[frame]?.date} | 🌱 NDVI: {ndviData[frame]?.ndvi.toFixed(3)}
+            📅 {ndviData[frame]?.date} | 🌱 NDVI:{" "}
+            {ndviData[frame]?.ndvi.toFixed(3)}
           </p>
         </div>
       )}
