@@ -3,9 +3,8 @@ import { useEffect, useRef, useState } from "react";
 import MapboxDraw from "@mapbox/mapbox-gl-draw";
 import mapboxgl from "mapbox-gl";
 import "./map.css";
-import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
+import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
 import axios from "axios";
-
 
 mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
 
@@ -46,11 +45,11 @@ export default function BloomingMap({ compareMode, onResetCompareMode }) {
 
   const [selectedPoints, setSelectedPoints] = useState({
     first: null,
-    second: null
+    second: null,
   });
   const [pointData, setPointData] = useState({
     first: [],
-    second: []
+    second: [],
   });
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -87,8 +86,8 @@ export default function BloomingMap({ compareMode, onResetCompareMode }) {
         const res = await api.get("/ndvi/global", {
           params: {
             start: compareMode?.dateRange?.start,
-            end: compareMode?.dateRange?.end
-          }
+            end: compareMode?.dateRange?.end,
+          },
         });
         const data = res.data.data || res.data;
         if (Array.isArray(data) && data.length > 0) {
@@ -122,7 +121,7 @@ export default function BloomingMap({ compareMode, onResetCompareMode }) {
   const addPulseLayer = (map, sourceId, layerId, data) => {
     // Check if map is loaded
     if (!map.isStyleLoaded()) {
-      map.once('load', () => addPulseLayer(map, sourceId, layerId, data));
+      map.once("load", () => addPulseLayer(map, sourceId, layerId, data));
       return;
     }
 
@@ -205,33 +204,36 @@ export default function BloomingMap({ compareMode, onResetCompareMode }) {
         }),
         "top-left"
       );
+    }
 
     // Point comparison click handler
     const clickHandler = async (e) => {
       if (!pointCompareMode) return;
-      
+
       const { lng, lat } = e.lngLat;
       const color = !selectedPoints.first ? "#2563eb" : "#16a34a";
-      
-      new mapboxgl.Marker({ color }).setLngLat([lng, lat]).addTo(leftMapRef.current);
+
+      new mapboxgl.Marker({ color })
+        .setLngLat([lng, lat])
+        .addTo(leftMapRef.current);
 
       try {
         const res = await api.get("/ndvi/point", {
-          params: { 
-            lat, 
-            lon: lng, 
+          params: {
+            lat,
+            lon: lng,
             start: compareMode?.dateRange?.start,
             end: compareMode?.dateRange?.end,
-            buffer: 1000 
+            buffer: 1000,
           },
         });
 
         if (!selectedPoints.first) {
-          setSelectedPoints(prev => ({ ...prev, first: { lat, lon: lng }}));
-          setPointData(prev => ({ ...prev, first: res.data.data }));
+          setSelectedPoints((prev) => ({ ...prev, first: { lat, lon: lng } }));
+          setPointData((prev) => ({ ...prev, first: res.data.data }));
         } else if (!selectedPoints.second) {
-          setSelectedPoints(prev => ({ ...prev, second: { lat, lon: lng }}));
-          setPointData(prev => ({ ...prev, second: res.data.data }));
+          setSelectedPoints((prev) => ({ ...prev, second: { lat, lon: lng } }));
+          setPointData((prev) => ({ ...prev, second: res.data.data }));
         }
       } catch (err) {
         console.error("Error fetching point NDVI:", err);
@@ -248,7 +250,7 @@ export default function BloomingMap({ compareMode, onResetCompareMode }) {
       if (leftMapRef.current) {
         leftMapRef.current.off("click", clickHandler);
       }
-      
+
       // Only remove maps when exiting comparison mode completely
       if (!globalCompareMode && !pointCompareMode) {
         if (leftMapRef.current) {
@@ -265,20 +267,35 @@ export default function BloomingMap({ compareMode, onResetCompareMode }) {
 
   // ✅ Animate pulses (stop when in regional compare mode)
   useEffect(() => {
-    if (!leftMapRef.current || ndviData.length === 0 || pointCompareMode) return;
+    if (!leftMapRef.current || ndviData.length === 0 || pointCompareMode)
+      return;
 
-    if (globalCompareMode && selectedLeftDate !== null && selectedRightDate !== null) {
+    if (
+      globalCompareMode &&
+      selectedLeftDate !== null &&
+      selectedRightDate !== null
+    ) {
       const leftData = ndviData[selectedLeftDate];
       const rightData = ndviData[selectedRightDate];
 
       if (leftData) {
         const pulseData = generatePulseData(leftData.ndvi, leftData.date);
-        addPulseLayer(leftMapRef.current, "ndvi-source-left", "ndvi-layer-left", pulseData);
+        addPulseLayer(
+          leftMapRef.current,
+          "ndvi-source-left",
+          "ndvi-layer-left",
+          pulseData
+        );
       }
 
       if (rightData && rightMapRef.current) {
         const pulseData = generatePulseData(rightData.ndvi, rightData.date);
-        addPulseLayer(rightMapRef.current, "ndvi-source-right", "ndvi-layer-right", pulseData);
+        addPulseLayer(
+          rightMapRef.current,
+          "ndvi-source-right",
+          "ndvi-layer-right",
+          pulseData
+        );
       }
     } else if (!globalCompareMode) {
       let i = 0;
@@ -289,12 +306,23 @@ export default function BloomingMap({ compareMode, onResetCompareMode }) {
         const { ndvi, date } = ndviData[i];
         const pulseData = generatePulseData(ndvi, date);
 
-        addPulseLayer(leftMapRef.current, "ndvi-source-left", "ndvi-layer-left", pulseData);
+        addPulseLayer(
+          leftMapRef.current,
+          "ndvi-source-left",
+          "ndvi-layer-left",
+          pulseData
+        );
       }, 1500);
 
       return () => clearInterval(interval);
     }
-  }, [ndviData, globalCompareMode, selectedLeftDate, selectedRightDate, pointCompareMode]);
+  }, [
+    ndviData,
+    globalCompareMode,
+    selectedLeftDate,
+    selectedRightDate,
+    pointCompareMode,
+  ]);
 
   const handleSliderDrag = (e) => {
     if (!compareContainer.current) return;
@@ -315,7 +343,7 @@ export default function BloomingMap({ compareMode, onResetCompareMode }) {
         setPointData({ first: [], second: [] });
         setSelectedLeftDate(null);
         setSelectedRightDate(null);
-        
+
         // Remove maps
         if (leftMapRef.current) {
           leftMapRef.current.remove();
@@ -353,7 +381,10 @@ export default function BloomingMap({ compareMode, onResetCompareMode }) {
 
       <div ref={leftMapContainer} className="flex-1" />
       {globalCompareMode && (
-        <div ref={rightMapContainer} className="flex-1 border-l-2 border-gray-400" />
+        <div
+          ref={rightMapContainer}
+          className="flex-1 border-l-2 border-gray-400"
+        />
       )}
 
       {/* Base map time slider HUD */}
@@ -377,7 +408,9 @@ export default function BloomingMap({ compareMode, onResetCompareMode }) {
               </h3>
               <div className="text-gray-400 text-sm">
                 {pointData.first.map((data, i) => (
-                  <div key={i}>{data.date}: {data.ndvi.toFixed(3)}</div>
+                  <div key={i}>
+                    {data.date}: {data.ndvi.toFixed(3)}
+                  </div>
                 ))}
               </div>
             </div>
@@ -388,7 +421,9 @@ export default function BloomingMap({ compareMode, onResetCompareMode }) {
               </h3>
               <div className="text-gray-400 text-sm">
                 {pointData.second.map((data, i) => (
-                  <div key={i}>{data.date}: {data.ndvi.toFixed(3)}</div>
+                  <div key={i}>
+                    {data.date}: {data.ndvi.toFixed(3)}
+                  </div>
                 ))}
               </div>
             </div>
@@ -413,7 +448,8 @@ export default function BloomingMap({ compareMode, onResetCompareMode }) {
                 className="w-full h-2 bg-gray-700 rounded-full appearance-none cursor-pointer"
               />
               <div className="mt-2 text-sm text-gray-400">
-                {ndviData[selectedLeftDate]?.date} → NDVI {ndviData[selectedLeftDate]?.ndvi.toFixed(3)}
+                {ndviData[selectedLeftDate]?.date} → NDVI{" "}
+                {ndviData[selectedLeftDate]?.ndvi.toFixed(3)}
               </div>
             </div>
 
@@ -428,7 +464,8 @@ export default function BloomingMap({ compareMode, onResetCompareMode }) {
                 className="w-full h-2 bg-gray-700 rounded-full appearance-none cursor-pointer"
               />
               <div className="mt-2 text-sm text-gray-400">
-                {ndviData[selectedRightDate]?.date} → NDVI {ndviData[selectedRightDate]?.ndvi.toFixed(3)}
+                {ndviData[selectedRightDate]?.date} → NDVI{" "}
+                {ndviData[selectedRightDate]?.ndvi.toFixed(3)}
               </div>
             </div>
           </div>
