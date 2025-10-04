@@ -2,7 +2,10 @@
 import { useEffect, useRef, useState } from "react";
 import MapboxDraw from "@mapbox/mapbox-gl-draw";
 import mapboxgl from "mapbox-gl";
-import axios from 'axios';
+import "./map.css";
+import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
+import axios from "axios";
+
 
 mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
 
@@ -79,15 +82,27 @@ export default function BloomingMap() {
         type: "circle",
         source: sourceId,
         paint: {
-          "circle-radius": ["interpolate", ["linear"], ["get", "intensity"], 0, 2, 1, 10],
+          "circle-radius": [
+            "interpolate",
+            ["linear"],
+            ["get", "intensity"],
+            0,
+            2,
+            1,
+            10,
+          ],
           "circle-color": [
             "interpolate",
             ["linear"],
             ["get", "intensity"],
-            0, "#60a5fa",
-            0.3, "#facc15",
-            0.6, "#22c55e",
-            1, "#15803d",
+            0,
+            "#60a5fa",
+            0.3,
+            "#facc15",
+            0.6,
+            "#22c55e",
+            1,
+            "#15803d",
           ],
           "circle-opacity": 0.6,
           "circle-blur": 0.7,
@@ -110,10 +125,26 @@ export default function BloomingMap() {
 
     const leftMap = createMap(leftMapContainer.current);
     leftMapRef.current = leftMap;
+    leftMapRef.current.addControl(
+      new MapboxGeocoder({
+        accessToken: mapboxgl.accessToken,
+        useBrowserFocus: true,
+        mapboxgl: mapboxgl,
+      }),
+      "top-left"
+    );
 
     if (comparisonMode && rightMapContainer.current) {
       const rightMap = createMap(rightMapContainer.current);
       rightMapRef.current = rightMap;
+      rightMapRef.current.addControl(
+        new MapboxGeocoder({
+          accessToken: mapboxgl.accessToken,
+          useBrowserFocus: true,
+          mapboxgl: mapboxgl,
+        }),
+        "top-left"
+      );
     }
 
     // 🔹 Add interactions (click + draw)
@@ -126,16 +157,18 @@ export default function BloomingMap() {
     leftMap.on("click", async (e) => {
       const { lng, lat } = e.lngLat;
 
-      new mapboxgl.Marker({ color: "lime" }).setLngLat([lng, lat]).addTo(leftMap);
+      new mapboxgl.Marker({ color: "lime" })
+        .setLngLat([lng, lat])
+        .addTo(leftMap);
 
       try {
         const res = await api.get("/ndvi/point", {
-          params: { 
-            lat, 
-            lon: lng, 
-            start: "2024-03-01", 
-            end: "2024-05-31", 
-            buffer: 1000 
+          params: {
+            lat,
+            lon: lng,
+            start: "2024-03-01",
+            end: "2024-05-31",
+            buffer: 1000,
           },
         });
         setSelectedRegion({ lat, lon: lng });
@@ -151,11 +184,20 @@ export default function BloomingMap() {
       const coords = e.features[0].geometry.coordinates[0];
       const lons = coords.map((c) => c[0]);
       const lats = coords.map((c) => c[1]);
-      const bbox = [Math.min(...lons), Math.min(...lats), Math.max(...lons), Math.max(...lats)];
+      const bbox = [
+        Math.min(...lons),
+        Math.min(...lats),
+        Math.max(...lons),
+        Math.max(...lats),
+      ];
 
       try {
         const res = await api.get("/ndvi/regional", {
-          params: { bbox: bbox.join(","), start: "2024-03-01", end: "2024-05-31" },
+          params: {
+            bbox: bbox.join(","),
+            start: "2024-03-01",
+            end: "2024-05-31",
+          },
         });
         setSelectedRegion({ bbox });
         setRegionData(res.data.data);
@@ -184,9 +226,19 @@ export default function BloomingMap() {
       const { ndvi, date } = ndviData[i];
       const pulseData = generatePulseData(ndvi, date);
 
-      addPulseLayer(leftMapRef.current, "ndvi-source-left", "ndvi-layer-left", pulseData);
+      addPulseLayer(
+        leftMapRef.current,
+        "ndvi-source-left",
+        "ndvi-layer-left",
+        pulseData
+      );
       if (comparisonMode && rightMapRef.current) {
-        addPulseLayer(rightMapRef.current, "ndvi-source-right", "ndvi-layer-right", pulseData);
+        addPulseLayer(
+          rightMapRef.current,
+          "ndvi-source-right",
+          "ndvi-layer-right",
+          pulseData
+        );
       }
     }, 1500);
 
@@ -197,14 +249,18 @@ export default function BloomingMap() {
     <div className="flex w-full h-screen relative">
       <div ref={leftMapContainer} className="flex-1" />
       {comparisonMode && (
-        <div ref={rightMapContainer} className="flex-1 border-l border-gray-300" />
+        <div
+          ref={rightMapContainer}
+          className="flex-1 border-l border-gray-300"
+        />
       )}
 
       {/* HUD */}
       {ndviData.length > 0 && (
         <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-white/80 px-4 py-2 rounded-lg shadow">
           <p className="text-sm font-semibold">
-            📅 {ndviData[frame]?.date} | 🌱 NDVI: {ndviData[frame]?.ndvi.toFixed(3)}
+            📅 {ndviData[frame]?.date} | 🌱 NDVI:{" "}
+            {ndviData[frame]?.ndvi.toFixed(3)}
           </p>
         </div>
       )}
@@ -223,7 +279,9 @@ export default function BloomingMap() {
             <h3 className="text-white text-lg mb-2">
               NDVI Timeline •{" "}
               {selectedRegion.lat
-                ? `${selectedRegion.lat.toFixed(2)}°, ${selectedRegion.lon.toFixed(2)}°`
+                ? `${selectedRegion.lat.toFixed(
+                    2
+                  )}°, ${selectedRegion.lon.toFixed(2)}°`
                 : "Region"}
             </h3>
 
