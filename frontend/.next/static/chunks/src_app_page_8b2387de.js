@@ -4,8 +4,9 @@
   "static/chunks/node_modules_@mapbox_mapbox-gl-draw_6d378e85._.js",
   "static/chunks/node_modules_mapbox-gl_dist_mapbox-gl_b0bb8555.js",
   "static/chunks/node_modules_axios_lib_99e19c7d._.js",
-  "static/chunks/node_modules_ead21420._.js",
-  "static/chunks/src_app_ca7f6912._.js"
+  "static/chunks/node_modules_92561280._.js",
+  "static/chunks/src_app_92aaeff4._.js",
+  "static/chunks/src_app_map_20dc4054.css"
 ],
     source: "dynamic"
 });

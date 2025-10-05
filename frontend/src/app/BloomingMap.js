@@ -44,11 +44,11 @@ export default function BloomingMap({ compareMode, onResetCompareMode }) {
 
   const [selectedPoints, setSelectedPoints] = useState({
     first: null,
-    second: null,
+    second: null
   });
   const [pointData, setPointData] = useState({
     first: [],
-    second: [],
+    second: []
   });
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -85,8 +85,8 @@ export default function BloomingMap({ compareMode, onResetCompareMode }) {
         const res = await api.get("/ndvi/global", {
           params: {
             start: compareMode?.dateRange?.start,
-            end: compareMode?.dateRange?.end,
-          },
+            end: compareMode?.dateRange?.end
+          }
         });
         const data = res.data.data || res.data;
         if (Array.isArray(data) && data.length > 0) {
@@ -120,7 +120,7 @@ export default function BloomingMap({ compareMode, onResetCompareMode }) {
   const addPulseLayer = (map, sourceId, layerId, data) => {
     // Check if map is loaded
     if (!map.isStyleLoaded()) {
-      map.once("load", () => addPulseLayer(map, sourceId, layerId, data));
+      map.once('load', () => addPulseLayer(map, sourceId, layerId, data));
       return;
     }
 
@@ -136,30 +136,27 @@ export default function BloomingMap({ compareMode, onResetCompareMode }) {
         type: "circle",
         source: sourceId,
         paint: {
-          "circle-radius": [
-            "interpolate",
-            ["linear"],
-            ["get", "intensity"],
-            0,
-            2,
-            1,
-            10,
-          ],
+          "circle-radius": ["interpolate", ["linear"], ["get", "intensity"], 0, 3, 1, 14],
           "circle-color": [
             "interpolate",
             ["linear"],
             ["get", "intensity"],
-            0,
-            "#60a5fa",
-            0.3,
-            "#facc15",
-            0.6,
-            "#22c55e",
-            1,
-            "#15803d",
+            0, "#3b82f6",    // Bright blue
+            0.3, "#fbbf24",  // Warm yellow
+            0.6, "#10b981",  // Emerald green
+            1, "#059669",    // Deep green
           ],
-          "circle-opacity": 0.6,
-          "circle-blur": 0.7,
+          "circle-opacity": 0.8,
+          "circle-blur": 0.5,
+          "circle-stroke-width": 1,
+          "circle-stroke-color": [
+            "interpolate",
+            ["linear"],
+            ["get", "intensity"],
+            0, "#60a5fa",
+            1, "#34d399",
+          ],
+          "circle-stroke-opacity": 0.6
         },
       });
     }
@@ -169,13 +166,71 @@ export default function BloomingMap({ compareMode, onResetCompareMode }) {
   useEffect(() => {
     if (!leftMapContainer.current) return;
 
-    const createMap = (container) => {
+    const createMap = (container, isMainMap = true) => {
       const map = new mapboxgl.Map({
         container,
-        style: "mapbox://styles/mapbox/light-v11",
+        style: "mapbox://styles/mapbox/dark-v11",
         center: [0, 20],
-        zoom: 1.5,
+        zoom: isMainMap ? 1.8 : 1.5,
+        projection: 'globe',
+        attributionControl: false
       });
+
+      // Enhanced globe styling on load
+      map.on('style.load', () => {
+        // Atmospheric glow
+        map.setFog({
+          color: 'rgb(30, 41, 59)', // Deep blue-gray
+          'high-color': 'rgb(15, 23, 42)', // Darker top
+          'horizon-blend': 0.05,
+          'space-color': 'rgb(2, 6, 23)', // Deep space black
+          'star-intensity': 0.8
+        });
+
+        // Ocean styling - deep blue with subtle glow
+        map.setPaintProperty('water', 'fill-color', '#0c4a6e');
+        
+        // Land styling - dark with green undertones
+        map.setPaintProperty('land', 'background-color', '#1e293b');
+        
+        // Country borders - subtle cyan
+        if (map.getLayer('admin-0-boundary')) {
+          map.setPaintProperty('admin-0-boundary', 'line-color', '#0891b2');
+          map.setPaintProperty('admin-0-boundary', 'line-opacity', 0.3);
+        }
+
+        // Add subtle rotation animation for main map when not in compare mode
+        if (isMainMap && !globalCompareMode && !pointCompareMode) {
+          let userInteracting = false;
+          let spinEnabled = true;
+
+          const spinGlobe = () => {
+            if (spinEnabled && !userInteracting) {
+              const center = map.getCenter();
+              center.lng += 0.15;
+              map.easeTo({ center, duration: 100, easing: (n) => n });
+            }
+          };
+
+          map.on('mousedown', () => { userInteracting = true; });
+          map.on('mouseup', () => { 
+            userInteracting = false;
+            setTimeout(() => { if (!userInteracting) spinEnabled = true; }, 3000);
+          });
+          map.on('dragstart', () => { userInteracting = true; spinEnabled = false; });
+          map.on('dragend', () => { 
+            userInteracting = false;
+            setTimeout(() => { if (!userInteracting) spinEnabled = true; }, 3000);
+          });
+
+          // Start spinning
+          const interval = setInterval(spinGlobe, 100);
+          
+          // Store interval on map for cleanup
+          map._spinInterval = interval;
+        }
+      });
+
       return map;
     };
 
@@ -208,31 +263,29 @@ export default function BloomingMap({ compareMode, onResetCompareMode }) {
     // Point comparison click handler
     const clickHandler = async (e) => {
       if (!pointCompareMode) return;
-
+      
       const { lng, lat } = e.lngLat;
       const color = !selectedPoints.first ? "#2563eb" : "#16a34a";
-
-      new mapboxgl.Marker({ color })
-        .setLngLat([lng, lat])
-        .addTo(leftMapRef.current);
+      
+      new mapboxgl.Marker({ color }).setLngLat([lng, lat]).addTo(leftMapRef.current);
 
       try {
         const res = await api.get("/ndvi/point", {
-          params: {
-            lat,
-            lon: lng,
+          params: { 
+            lat, 
+            lon: lng, 
             start: compareMode?.dateRange?.start,
             end: compareMode?.dateRange?.end,
-            buffer: 1000,
+            buffer: 1000 
           },
         });
 
         if (!selectedPoints.first) {
-          setSelectedPoints((prev) => ({ ...prev, first: { lat, lon: lng } }));
-          setPointData((prev) => ({ ...prev, first: res.data.data }));
+          setSelectedPoints(prev => ({ ...prev, first: { lat, lon: lng }}));
+          setPointData(prev => ({ ...prev, first: res.data.data }));
         } else if (!selectedPoints.second) {
-          setSelectedPoints((prev) => ({ ...prev, second: { lat, lon: lng } }));
-          setPointData((prev) => ({ ...prev, second: res.data.data }));
+          setSelectedPoints(prev => ({ ...prev, second: { lat, lon: lng }}));
+          setPointData(prev => ({ ...prev, second: res.data.data }));
         }
       } catch (err) {
         console.error("Error fetching point NDVI:", err);
@@ -249,14 +302,21 @@ export default function BloomingMap({ compareMode, onResetCompareMode }) {
       if (leftMapRef.current) {
         leftMapRef.current.off("click", clickHandler);
       }
-
+      
       // Only remove maps when exiting comparison mode completely
       if (!globalCompareMode && !pointCompareMode) {
         if (leftMapRef.current) {
+          // Clear spin interval if it exists
+          if (leftMapRef.current._spinInterval) {
+            clearInterval(leftMapRef.current._spinInterval);
+          }
           leftMapRef.current.remove();
           leftMapRef.current = null;
         }
         if (rightMapRef.current) {
+          if (rightMapRef.current._spinInterval) {
+            clearInterval(rightMapRef.current._spinInterval);
+          }
           rightMapRef.current.remove();
           rightMapRef.current = null;
         }
@@ -266,35 +326,20 @@ export default function BloomingMap({ compareMode, onResetCompareMode }) {
 
   // ✅ Animate pulses (stop when in regional compare mode)
   useEffect(() => {
-    if (!leftMapRef.current || ndviData.length === 0 || pointCompareMode)
-      return;
+    if (!leftMapRef.current || ndviData.length === 0 || pointCompareMode) return;
 
-    if (
-      globalCompareMode &&
-      selectedLeftDate !== null &&
-      selectedRightDate !== null
-    ) {
+    if (globalCompareMode && selectedLeftDate !== null && selectedRightDate !== null) {
       const leftData = ndviData[selectedLeftDate];
       const rightData = ndviData[selectedRightDate];
 
       if (leftData) {
         const pulseData = generatePulseData(leftData.ndvi, leftData.date);
-        addPulseLayer(
-          leftMapRef.current,
-          "ndvi-source-left",
-          "ndvi-layer-left",
-          pulseData
-        );
+        addPulseLayer(leftMapRef.current, "ndvi-source-left", "ndvi-layer-left", pulseData);
       }
 
       if (rightData && rightMapRef.current) {
         const pulseData = generatePulseData(rightData.ndvi, rightData.date);
-        addPulseLayer(
-          rightMapRef.current,
-          "ndvi-source-right",
-          "ndvi-layer-right",
-          pulseData
-        );
+        addPulseLayer(rightMapRef.current, "ndvi-source-right", "ndvi-layer-right", pulseData);
       }
     } else if (!globalCompareMode) {
       let i = 0;
@@ -305,23 +350,12 @@ export default function BloomingMap({ compareMode, onResetCompareMode }) {
         const { ndvi, date } = ndviData[i];
         const pulseData = generatePulseData(ndvi, date);
 
-        addPulseLayer(
-          leftMapRef.current,
-          "ndvi-source-left",
-          "ndvi-layer-left",
-          pulseData
-        );
+        addPulseLayer(leftMapRef.current, "ndvi-source-left", "ndvi-layer-left", pulseData);
       }, 1500);
 
       return () => clearInterval(interval);
     }
-  }, [
-    ndviData,
-    globalCompareMode,
-    selectedLeftDate,
-    selectedRightDate,
-    pointCompareMode,
-  ]);
+  }, [ndviData, globalCompareMode, selectedLeftDate, selectedRightDate, pointCompareMode]);
 
   const handleSliderDrag = (e) => {
     if (!compareContainer.current) return;
@@ -342,13 +376,19 @@ export default function BloomingMap({ compareMode, onResetCompareMode }) {
         setPointData({ first: [], second: [] });
         setSelectedLeftDate(null);
         setSelectedRightDate(null);
-
+        
         // Remove maps
         if (leftMapRef.current) {
+          if (leftMapRef.current._spinInterval) {
+            clearInterval(leftMapRef.current._spinInterval);
+          }
           leftMapRef.current.remove();
           leftMapRef.current = null;
         }
         if (rightMapRef.current) {
+          if (rightMapRef.current._spinInterval) {
+            clearInterval(rightMapRef.current._spinInterval);
+          }
           rightMapRef.current.remove();
           rightMapRef.current = null;
         }
@@ -356,42 +396,41 @@ export default function BloomingMap({ compareMode, onResetCompareMode }) {
         // Reset parent component state
         if (onResetCompareMode) onResetCompareMode();
       }}
-      className="absolute top-4 right-4 bg-red-500 text-white px-4 py-2 rounded-lg shadow-lg hover:bg-red-600 transition-colors z-50"
+      className="absolute top-6 right-6 bg-gradient-to-r from-red-600 to-red-700 text-white px-6 py-3 rounded-xl shadow-2xl hover:from-red-700 hover:to-red-800 transition-all duration-300 z-50 font-semibold border border-red-400/50 hover:scale-105"
     >
-      Exit Comparison
+      ✕ Exit Comparison
     </button>
   );
 
   return (
-    <div className="flex w-full h-screen relative">
+    <div className="flex w-full h-screen relative bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
       {isLoading && (
-        <div className="absolute inset-0 bg-black/50 flex items-center justify-center z-50">
-          <div className="bg-white p-4 rounded-lg shadow-lg">
-            <p className="text-lg font-semibold">Loading NDVI data...</p>
+        <div className="absolute inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50">
+          <div className="bg-gradient-to-br from-slate-800 to-slate-900 p-6 rounded-2xl shadow-2xl border border-cyan-500/30">
+            <p className="text-lg font-semibold text-cyan-400">Loading NDVI data...</p>
+            <div className="mt-3 h-1 w-48 bg-slate-700 rounded-full overflow-hidden">
+              <div className="h-full bg-gradient-to-r from-cyan-500 to-emerald-500 animate-pulse"></div>
+            </div>
           </div>
         </div>
       )}
 
       {error && (
-        <div className="absolute top-4 left-1/2 -translate-x-1/2 bg-red-500 text-white px-4 py-2 rounded-lg">
-          {error}
+        <div className="absolute top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-red-600 to-red-700 text-white px-6 py-3 rounded-xl shadow-2xl border border-red-400/50">
+          ⚠️ {error}
         </div>
       )}
 
       <div ref={leftMapContainer} className="flex-1" />
       {globalCompareMode && (
-        <div
-          ref={rightMapContainer}
-          className="flex-1 border-l-2 border-gray-400"
-        />
+        <div ref={rightMapContainer} className="flex-1 border-l-2 border-gray-400" />
       )}
 
       {/* Base map time slider HUD */}
       {!globalCompareMode && !pointCompareMode && ndviData.length > 0 && (
-        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-white/80 px-4 py-2 rounded-lg shadow">
-          <p className="text-sm font-semibold">
-            📅 {ndviData[frame]?.date} | 🌱 NDVI:{" "}
-            {ndviData[frame]?.ndvi.toFixed(3)}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 bg-gradient-to-r from-slate-900/95 to-slate-800/95 backdrop-blur-md px-8 py-4 rounded-2xl shadow-2xl border border-cyan-500/30">
+          <p className="text-base font-semibold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400">
+            📅 {ndviData[frame]?.date} | 🌱 NDVI: <span className="text-emerald-400">{ndviData[frame]?.ndvi.toFixed(3)}</span>
           </p>
         </div>
       )}
@@ -407,9 +446,7 @@ export default function BloomingMap({ compareMode, onResetCompareMode }) {
               </h3>
               <div className="text-gray-400 text-sm">
                 {pointData.first.map((data, i) => (
-                  <div key={i}>
-                    {data.date}: {data.ndvi.toFixed(3)}
-                  </div>
+                  <div key={i}>{data.date}: {data.ndvi.toFixed(3)}</div>
                 ))}
               </div>
             </div>
@@ -420,9 +457,7 @@ export default function BloomingMap({ compareMode, onResetCompareMode }) {
               </h3>
               <div className="text-gray-400 text-sm">
                 {pointData.second.map((data, i) => (
-                  <div key={i}>
-                    {data.date}: {data.ndvi.toFixed(3)}
-                  </div>
+                  <div key={i}>{data.date}: {data.ndvi.toFixed(3)}</div>
                 ))}
               </div>
             </div>
@@ -447,8 +482,7 @@ export default function BloomingMap({ compareMode, onResetCompareMode }) {
                 className="w-full h-2 bg-gray-700 rounded-full appearance-none cursor-pointer"
               />
               <div className="mt-2 text-sm text-gray-400">
-                {ndviData[selectedLeftDate]?.date} → NDVI{" "}
-                {ndviData[selectedLeftDate]?.ndvi.toFixed(3)}
+                {ndviData[selectedLeftDate]?.date} → NDVI {ndviData[selectedLeftDate]?.ndvi.toFixed(3)}
               </div>
             </div>
 
@@ -463,8 +497,7 @@ export default function BloomingMap({ compareMode, onResetCompareMode }) {
                 className="w-full h-2 bg-gray-700 rounded-full appearance-none cursor-pointer"
               />
               <div className="mt-2 text-sm text-gray-400">
-                {ndviData[selectedRightDate]?.date} → NDVI{" "}
-                {ndviData[selectedRightDate]?.ndvi.toFixed(3)}
+                {ndviData[selectedRightDate]?.date} → NDVI {ndviData[selectedRightDate]?.ndvi.toFixed(3)}
               </div>
             </div>
           </div>
