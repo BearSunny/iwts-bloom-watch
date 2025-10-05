@@ -85,12 +85,12 @@ function RootLayout({ children }) {
             children: children
         }, void 0, false, {
             fileName: "[project]/src/app/layout.js",
-            lineNumber: 26,
+            lineNumber: 24,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/src/app/layout.js",
-        lineNumber: 25,
+        lineNumber: 23,
         columnNumber: 5
     }, this);
 }
