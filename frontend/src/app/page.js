@@ -4,10 +4,12 @@ import BloomingMap from "./BloomingMap";
 import React from "react";
 import SideBar from "./sideBar.js";
 import NDVIChart from "./chart/NDVIChart";
+import DashBoard from "./dashBoard";
 
 export default function Home() {
   const [showSpecies, setShowSpecies] = useState(false);
   const [showCompareModal, setShowCompareModal] = useState(false);
+  const [showDashBoard, setShowDashBoard] = useState(false);
   const [compareMode, setCompareMode] = useState(null);
   const [showGraph, setShowGraph] = useState(false);
   const [dateRange, setDateRange] = useState({
@@ -15,7 +17,6 @@ export default function Home() {
     end: "2024-12-31",
   });
   const chartRef = useRef(null);
-
 
   const handleResetCompareMode = () => {
     setCompareMode(null);
@@ -66,6 +67,22 @@ export default function Home() {
             className="h-[30px] mx-[20px] px-[40px] w-40 bg-primary font-bold text-white text-left rounded-3xl"
           >
             Comparison
+          </button>
+        </div>
+        {/* Farmer's Dashboard*/}
+
+        <div>
+          <img
+            src="./comparison.svg"
+            className="absolute my-[5px] mx-[25px] w-10 h-[20px]"
+            alt="Comparison icon"
+          />
+          <button
+            id="locations"
+            onClick={() => setShowDashBoard(true)}
+            className="h-[30px] mx-[20px] px-[40px] bg-primary font-bold text-white text-left rounded-3xl"
+          >
+            Farmer's Dashboard
           </button>
         </div>
       </div>
@@ -171,6 +188,10 @@ export default function Home() {
           <NDVIChart ref={chartRef} />
         </div>
       ) : null}
+      <DashBoard
+        isOpen={showDashBoard}
+        onClose={() => setShowDashBoard(false)}
+      />
     </main>
   );
 }

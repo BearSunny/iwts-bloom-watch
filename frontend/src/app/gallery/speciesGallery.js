@@ -71,6 +71,7 @@ function SpeciesGallery() {
         <h1 className="font-bold text-2xl"></h1>
         <br></br>
         <h1 className="font-bold text-2xl"> Search for a species </h1>
+        <br></br>
         <hr></hr>
         <h1> Featured Species</h1>
         <div
