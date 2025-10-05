@@ -1,8 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import MapboxDraw from "@mapbox/mapbox-gl-draw";
+import "./geocoderCustomStyle.css";
 import mapboxgl from "mapbox-gl";
-import "./map.css";
 import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
 import axios from "axios";
 

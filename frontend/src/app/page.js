@@ -1,17 +1,22 @@
 "use client";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import BloomingMap from "./BloomingMap";
 import React from "react";
 import SideBar from "./sideBar.js";
+import NDVIChart from "./chart/NDVIChart";
+import DashBoard from "./dashBoard";
 
 export default function Home() {
   const [showSpecies, setShowSpecies] = useState(false);
   const [showCompareModal, setShowCompareModal] = useState(false);
+  const [showDashBoard, setShowDashBoard] = useState(false);
   const [compareMode, setCompareMode] = useState(null);
+  const [showGraph, setShowGraph] = useState(false);
   const [dateRange, setDateRange] = useState({
     start: "2024-01-01",
     end: "2024-12-31",
   });
+  const chartRef = useRef(null);
 
   const handleResetCompareMode = () => {
     setCompareMode(null);
@@ -62,6 +67,22 @@ export default function Home() {
             className="h-[30px] mx-[20px] px-[40px] w-40 bg-primary font-bold text-white text-left rounded-3xl"
           >
             Comparison
+          </button>
+        </div>
+        {/* Farmer's Dashboard*/}
+
+        <div>
+          <img
+            src="./comparison.svg"
+            className="absolute my-[5px] mx-[25px] w-10 h-[20px]"
+            alt="Comparison icon"
+          />
+          <button
+            id="locations"
+            onClick={() => setShowDashBoard(true)}
+            className="h-[30px] mx-[20px] px-[40px] bg-primary font-bold text-white text-left rounded-3xl"
+          >
+            Farmer's Dashboard
           </button>
         </div>
       </div>
@@ -128,6 +149,10 @@ export default function Home() {
                 onClick={() => {
                   setCompareMode({ type: "export", dateRange });
                   setShowCompareModal(false);
+                  setShowGraph((prev) => {
+                    const next = !prev;
+                    return next;
+                  });
                 }}
                 className="px-6 py-4 bg-purple-500 text-white rounded-lg hover:bg-purple-600 font-semibold transition-colors"
               >
@@ -141,6 +166,31 @@ export default function Home() {
       <BloomingMap
         compareMode={compareMode}
         onResetCompareMode={handleResetCompareMode}
+      />
+
+      {showGraph ? (
+        <div className="fixed top-40 inset-auto flex-col text-center align-center justify-center w-150 h-[400px] p-4 pb-15 bg-white rounded-2xl shadow-md">
+          <div className="flex w-full justify-between mb-3">
+            <button
+              className="px-3 py-1 bg-highlight text-white font-semibold rounded-3xl"
+              onClick={() => setShowGraph(false)}
+            >
+              Close
+            </button>
+            <h1 className="font-bold text-primary mt-3">NDVI Value Chart</h1>
+            <button
+              className="px-3 py-1 bg-primary text-white font-semibold rounded-3xl"
+              onClick={() => chartRef.current?.exportToPNG()}
+            >
+              Export Graph
+            </button>
+          </div>
+          <NDVIChart ref={chartRef} />
+        </div>
+      ) : null}
+      <DashBoard
+        isOpen={showDashBoard}
+        onClose={() => setShowDashBoard(false)}
       />
     </main>
   );

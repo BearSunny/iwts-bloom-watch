@@ -4,7 +4,7 @@ const InfoModal = ({ flower, onClose }) => {
   if (!flower) return null;
 
   return (
-    <div className="flex-row text-center w-64 p-4 justify-center bg-secondary">
+    <div className="flex-row text-center w-80 p-4 justify-center bg-secondary">
       <div className="h-full overflow-hidden">
         <button
           onClick={onClose}

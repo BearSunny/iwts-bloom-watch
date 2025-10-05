@@ -66,11 +66,12 @@ function SpeciesGallery() {
     return (
       <div
         id="side-bar"
-        className="flex-row text-center w-64 p-4 justify-center bg-primary"
+        className="flex-row text-center w-80 p-4 justify-center bg-primary"
       >
         <h1 className="font-bold text-2xl"></h1>
         <br></br>
         <h1 className="font-bold text-2xl"> Search for a species </h1>
+        <br></br>
         <hr></hr>
         <h1> Featured Species</h1>
         <div

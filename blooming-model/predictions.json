@@ -1,0 +1,74 @@
+[
+  {
+    "timestamp": "2025-10-05T10:46:57.987662",
+    "latitude": 30.0,
+    "longitude": -110.126457,
+    "species": "lady tulip",
+    "year": 2025,
+    "predicted_doy": 91.0,
+    "predicted_date": "2025-04-01"
+  },
+  {
+    "timestamp": "2025-10-05T11:10:01.761803",
+    "latitude": 20.14154,
+    "longitude": 105.37084,
+    "species": "Rose",
+    "year": 2026,
+    "predicted_doy": 86.0,
+    "predicted_date": "2026-03-27"
+  },
+  {
+    "timestamp": "2025-10-05T11:10:17.055928",
+    "latitude": 20.14154,
+    "longitude": 105.37084,
+    "species": "Spider Lily",
+    "year": 2026,
+    "predicted_doy": 88.0,
+    "predicted_date": "2026-03-29"
+  },
+  {
+    "timestamp": "2025-10-05T11:10:18.560284",
+    "latitude": 20.14154,
+    "longitude": 105.37084,
+    "species": "Spider Lily",
+    "year": 2026,
+    "predicted_doy": 88.0,
+    "predicted_date": "2026-03-29"
+  },
+  {
+    "timestamp": "2025-10-05T11:10:18.755335",
+    "latitude": 20.14154,
+    "longitude": 105.37084,
+    "species": "Spider Lily",
+    "year": 2026,
+    "predicted_doy": 88.0,
+    "predicted_date": "2026-03-29"
+  },
+  {
+    "timestamp": "2025-10-05T11:10:18.935764",
+    "latitude": 20.14154,
+    "longitude": 105.37084,
+    "species": "Spider Lily",
+    "year": 2026,
+    "predicted_doy": 88.0,
+    "predicted_date": "2026-03-29"
+  },
+  {
+    "timestamp": "2025-10-05T11:10:19.121293",
+    "latitude": 20.14154,
+    "longitude": 105.37084,
+    "species": "Spider Lily",
+    "year": 2026,
+    "predicted_doy": 88.0,
+    "predicted_date": "2026-03-29"
+  },
+  {
+    "timestamp": "2025-10-05T11:12:56.998109",
+    "latitude": 7.5253,
+    "longitude": 125.47866,
+    "species": "Rose",
+    "year": 2026,
+    "predicted_doy": 81.0,
+    "predicted_date": "2026-03-22"
+  }
+]
