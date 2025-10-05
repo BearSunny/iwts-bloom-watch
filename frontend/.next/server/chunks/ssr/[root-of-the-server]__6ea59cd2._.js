@@ -1103,6 +1103,277 @@ function SideBar({ showSpecies }) {
 }
 const __TURBOPACK__default__export__ = SideBar;
 }),
+"[project]/Documents/GitHub/iwts-bloom-watch/frontend/src/app/chart/NDVIChart.js [app-ssr] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "default",
+    ()=>__TURBOPACK__default__export__
+]);
+var __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$GitHub$2f$iwts$2d$bloom$2d$watch$2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/Documents/GitHub/iwts-bloom-watch/frontend/node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react-jsx-dev-runtime.js [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$GitHub$2f$iwts$2d$bloom$2d$watch$2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/Documents/GitHub/iwts-bloom-watch/frontend/node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react.js [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$GitHub$2f$iwts$2d$bloom$2d$watch$2f$frontend$2f$node_modules$2f$chart$2e$js$2f$dist$2f$chart$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$locals$3e$__ = __turbopack_context__.i("[project]/Documents/GitHub/iwts-bloom-watch/frontend/node_modules/chart.js/dist/chart.js [app-ssr] (ecmascript) <locals>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$GitHub$2f$iwts$2d$bloom$2d$watch$2f$frontend$2f$node_modules$2f$react$2d$chartjs$2d$2$2f$dist$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/Documents/GitHub/iwts-bloom-watch/frontend/node_modules/react-chartjs-2/dist/index.js [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$GitHub$2f$iwts$2d$bloom$2d$watch$2f$frontend$2f$node_modules$2f$chartjs$2d$adapter$2d$date$2d$fns$2f$dist$2f$chartjs$2d$adapter$2d$date$2d$fns$2e$esm$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/Documents/GitHub/iwts-bloom-watch/frontend/node_modules/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.esm.js [app-ssr] (ecmascript)");
+"use client";
+;
+;
+;
+;
+;
+__TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$GitHub$2f$iwts$2d$bloom$2d$watch$2f$frontend$2f$node_modules$2f$chart$2e$js$2f$dist$2f$chart$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$locals$3e$__["Chart"].register(__TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$GitHub$2f$iwts$2d$bloom$2d$watch$2f$frontend$2f$node_modules$2f$chart$2e$js$2f$dist$2f$chart$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$locals$3e$__["CategoryScale"], __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$GitHub$2f$iwts$2d$bloom$2d$watch$2f$frontend$2f$node_modules$2f$chart$2e$js$2f$dist$2f$chart$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$locals$3e$__["LinearScale"], __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$GitHub$2f$iwts$2d$bloom$2d$watch$2f$frontend$2f$node_modules$2f$chart$2e$js$2f$dist$2f$chart$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$locals$3e$__["PointElement"], __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$GitHub$2f$iwts$2d$bloom$2d$watch$2f$frontend$2f$node_modules$2f$chart$2e$js$2f$dist$2f$chart$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$locals$3e$__["LineElement"], __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$GitHub$2f$iwts$2d$bloom$2d$watch$2f$frontend$2f$node_modules$2f$chart$2e$js$2f$dist$2f$chart$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$locals$3e$__["Filler"], __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$GitHub$2f$iwts$2d$bloom$2d$watch$2f$frontend$2f$node_modules$2f$chart$2e$js$2f$dist$2f$chart$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$locals$3e$__["Tooltip"], __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$GitHub$2f$iwts$2d$bloom$2d$watch$2f$frontend$2f$node_modules$2f$chart$2e$js$2f$dist$2f$chart$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$locals$3e$__["Legend"], __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$GitHub$2f$iwts$2d$bloom$2d$watch$2f$frontend$2f$node_modules$2f$chart$2e$js$2f$dist$2f$chart$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$locals$3e$__["TimeScale"]);
+// === NDVI DATA ===
+const ndviData = [
+    {
+        date: "2024-01-01",
+        ndvi: 0.328372877845626
+    },
+    {
+        date: "2024-01-17",
+        ndvi: 0.3133371984834311
+    },
+    {
+        date: "2024-02-02",
+        ndvi: 0.3164387600096921
+    },
+    {
+        date: "2024-02-18",
+        ndvi: 0.31208659739892214
+    },
+    {
+        date: "2024-03-05",
+        ndvi: 0.31966332975949524
+    },
+    {
+        date: "2024-03-21",
+        ndvi: 0.33007922383256183
+    },
+    {
+        date: "2024-04-06",
+        ndvi: 0.35177632452720925
+    },
+    {
+        date: "2024-04-22",
+        ndvi: 0.37442884545118443
+    },
+    {
+        date: "2024-05-08",
+        ndvi: 0.3989218979442026
+    },
+    {
+        date: "2024-05-24",
+        ndvi: 0.4314162413513212
+    },
+    {
+        date: "2024-06-09",
+        ndvi: 0.45418827669947287
+    },
+    {
+        date: "2024-06-25",
+        ndvi: 0.47499360239633026
+    },
+    {
+        date: "2024-07-11",
+        ndvi: 0.47279709475136944
+    },
+    {
+        date: "2024-07-27",
+        ndvi: 0.48198399499941424
+    },
+    {
+        date: "2024-08-12",
+        ndvi: 0.4815237719484111
+    },
+    {
+        date: "2024-08-28",
+        ndvi: 0.46748123043769413
+    },
+    {
+        date: "2024-09-13",
+        ndvi: 0.44788238171909645
+    },
+    {
+        date: "2024-09-29",
+        ndvi: 0.4162884776820417
+    },
+    {
+        date: "2024-10-15",
+        ndvi: 0.3905575547898575
+    },
+    {
+        date: "2024-10-31",
+        ndvi: 0.3633956063834815
+    },
+    {
+        date: "2024-11-16",
+        ndvi: 0.3526573643016067
+    },
+    {
+        date: "2024-12-02",
+        ndvi: 0.34495404214567377
+    },
+    {
+        date: "2024-12-18",
+        ndvi: 0.3352773682018393
+    }
+];
+// === Crosshair Plugin ===
+const crosshairPlugin = {
+    id: "crosshair",
+    afterDatasetsDraw (chart) {
+        const { ctx, tooltip, chartArea: { top, bottom, left, right } } = chart;
+        if (!tooltip?.getActiveElements()?.length) return;
+        const { x, y } = tooltip.getActiveElements()[0].element;
+        ctx.save();
+        ctx.lineWidth = 1;
+        ctx.strokeStyle = "rgba(0,0,0,0.25)";
+        ctx.setLineDash([
+            3,
+            3
+        ]);
+        ctx.beginPath();
+        ctx.moveTo(x, top);
+        ctx.lineTo(x, bottom);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(left, y);
+        ctx.lineTo(right, y);
+        ctx.stroke();
+        ctx.restore();
+    }
+};
+__TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$GitHub$2f$iwts$2d$bloom$2d$watch$2f$frontend$2f$node_modules$2f$chart$2e$js$2f$dist$2f$chart$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$locals$3e$__["Chart"].register(crosshairPlugin);
+// === COMPONENT ===
+const NDVIChart = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$GitHub$2f$iwts$2d$bloom$2d$watch$2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["forwardRef"])((props, ref)=>{
+    const chartRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$GitHub$2f$iwts$2d$bloom$2d$watch$2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useRef"])(null);
+    // Export PNG function exposed to parent
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$GitHub$2f$iwts$2d$bloom$2d$watch$2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useImperativeHandle"])(ref, ()=>({
+            exportToPNG () {
+                if (!chartRef.current) return;
+                const imageUrl = chartRef.current.toBase64Image("image/png", 1.0);
+                const link = document.createElement("a");
+                link.href = imageUrl;
+                link.download = "NDVI_Chart.png";
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+        }));
+    const data = {
+        labels: ndviData.map((d)=>d.date),
+        datasets: [
+            {
+                label: "NDVI",
+                data: ndviData.map((d)=>d.ndvi.toFixed(3)),
+                fill: true,
+                backgroundColor: (context)=>{
+                    const ctx = context.chart.ctx;
+                    const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+                    gradient.addColorStop(0, "rgba(34,197,94,0.4)");
+                    gradient.addColorStop(1, "rgba(34,197,94,0.0)");
+                    return gradient;
+                },
+                borderColor: "rgba(22,163,74,1)",
+                pointRadius: 3,
+                tension: 0.3,
+                pointBackgroundColor: "rgba(22,163,74,1)"
+            }
+        ]
+    };
+    const options = {
+        responsive: true,
+        maintainAspectRatio: false,
+        interaction: {
+            mode: "nearest",
+            intersect: false
+        },
+        plugins: {
+            legend: {
+                display: false
+            },
+            tooltip: {
+                enabled: false,
+                external: (context)=>{
+                    const { chart, tooltip } = context;
+                    let tooltipEl = document.getElementById("custom-tooltip");
+                    if (!tooltipEl) {
+                        tooltipEl = document.createElement("div");
+                        tooltipEl.id = "custom-tooltip";
+                        tooltipEl.className = "absolute bg-white border border-gray-300 rounded-lg shadow-md p-2 text-sm pointer-events-none";
+                        chart.canvas.parentNode.appendChild(tooltipEl);
+                    }
+                    if (tooltip.opacity === 0) {
+                        tooltipEl.style.opacity = 0;
+                        return;
+                    }
+                    if (tooltip.body) {
+                        const { dataIndex } = tooltip.dataPoints[0];
+                        const d = ndviData[dataIndex];
+                        tooltipEl.innerHTML = `
+              <div><b>${new Date(d.date).toDateString()}</b></div>
+              <div>NDVI: ${d.ndvi.toFixed(3)}</div>
+            `;
+                    }
+                    const { offsetLeft, offsetTop } = chart.canvas;
+                    tooltipEl.style.opacity = 1;
+                    tooltipEl.style.left = offsetLeft + tooltip.caretX + 15 + "px";
+                    tooltipEl.style.top = offsetTop + tooltip.caretY - 30 + "px";
+                }
+            }
+        },
+        scales: {
+            x: {
+                type: "time",
+                time: {
+                    unit: "month",
+                    displayFormats: {
+                        month: "MMM"
+                    }
+                },
+                grid: {
+                    color: "rgba(0,0,0,0.05)"
+                },
+                title: {
+                    display: true,
+                    text: "Date"
+                }
+            },
+            y: {
+                min: 0,
+                max: 1,
+                ticks: {
+                    stepSize: 0.1,
+                    callback: (v)=>v.toFixed(1)
+                },
+                grid: {
+                    color: "rgba(0,0,0,0.05)"
+                },
+                title: {
+                    display: true,
+                    text: "NDVI (0–1.0)"
+                }
+            }
+        }
+    };
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$GitHub$2f$iwts$2d$bloom$2d$watch$2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+        className: "h-full",
+        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$GitHub$2f$iwts$2d$bloom$2d$watch$2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$GitHub$2f$iwts$2d$bloom$2d$watch$2f$frontend$2f$node_modules$2f$react$2d$chartjs$2d$2$2f$dist$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Line"], {
+            ref: chartRef,
+            data: data,
+            options: options
+        }, void 0, false, {
+            fileName: "[project]/Documents/GitHub/iwts-bloom-watch/frontend/src/app/chart/NDVIChart.js",
+            lineNumber: 184,
+            columnNumber: 7
+        }, ("TURBOPACK compile-time value", void 0))
+    }, void 0, false, {
+        fileName: "[project]/Documents/GitHub/iwts-bloom-watch/frontend/src/app/chart/NDVIChart.js",
+        lineNumber: 183,
+        columnNumber: 5
+    }, ("TURBOPACK compile-time value", void 0));
+});
+const __TURBOPACK__default__export__ = NDVIChart;
+}),
 "[project]/Documents/GitHub/iwts-bloom-watch/frontend/src/app/page.js [app-ssr] (ecmascript)", ((__turbopack_context__) => {
 "use strict";
 
@@ -1114,11 +1385,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$GitHub$2f$iwts$
 var __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$GitHub$2f$iwts$2d$bloom$2d$watch$2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/Documents/GitHub/iwts-bloom-watch/frontend/node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react.js [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$GitHub$2f$iwts$2d$bloom$2d$watch$2f$frontend$2f$src$2f$app$2f$BloomingMap$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/Documents/GitHub/iwts-bloom-watch/frontend/src/app/BloomingMap.js [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$GitHub$2f$iwts$2d$bloom$2d$watch$2f$frontend$2f$src$2f$app$2f$sideBar$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/Documents/GitHub/iwts-bloom-watch/frontend/src/app/sideBar.js [app-ssr] (ecmascript)");
-(()=>{
-    const e = new Error("Cannot find module '@/components/NDVIChart'");
-    e.code = 'MODULE_NOT_FOUND';
-    throw e;
-})();
+var __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$GitHub$2f$iwts$2d$bloom$2d$watch$2f$frontend$2f$src$2f$app$2f$chart$2f$NDVIChart$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/Documents/GitHub/iwts-bloom-watch/frontend/src/app/chart/NDVIChart.js [app-ssr] (ecmascript)");
 "use client";
 ;
 ;
@@ -1130,10 +1397,12 @@ function Home() {
     const [showSpecies, setShowSpecies] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$GitHub$2f$iwts$2d$bloom$2d$watch$2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
     const [showCompareModal, setShowCompareModal] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$GitHub$2f$iwts$2d$bloom$2d$watch$2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
     const [compareMode, setCompareMode] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$GitHub$2f$iwts$2d$bloom$2d$watch$2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(null);
+    const [showGraph, setShowGraph] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$GitHub$2f$iwts$2d$bloom$2d$watch$2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
     const [dateRange, setDateRange] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$GitHub$2f$iwts$2d$bloom$2d$watch$2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])({
         start: "2024-01-01",
         end: "2024-12-31"
     });
+    const chartRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$GitHub$2f$iwts$2d$bloom$2d$watch$2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useRef"])(null);
     const handleResetCompareMode = ()=>{
         setCompareMode(null);
     };
@@ -1144,7 +1413,7 @@ function Home() {
                 showSpecies: showSpecies
             }, void 0, false, {
                 fileName: "[project]/Documents/GitHub/iwts-bloom-watch/frontend/src/app/page.js",
-                lineNumber: 23,
+                lineNumber: 26,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$GitHub$2f$iwts$2d$bloom$2d$watch$2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1163,7 +1432,7 @@ function Home() {
                                 alt: "flower"
                             }, void 0, false, {
                                 fileName: "[project]/Documents/GitHub/iwts-bloom-watch/frontend/src/app/page.js",
-                                lineNumber: 33,
+                                lineNumber: 36,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$GitHub$2f$iwts$2d$bloom$2d$watch$2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -1177,13 +1446,13 @@ function Home() {
                                 children: "Species"
                             }, void 0, false, {
                                 fileName: "[project]/Documents/GitHub/iwts-bloom-watch/frontend/src/app/page.js",
-                                lineNumber: 38,
+                                lineNumber: 41,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/Documents/GitHub/iwts-bloom-watch/frontend/src/app/page.js",
-                        lineNumber: 32,
+                        lineNumber: 35,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$GitHub$2f$iwts$2d$bloom$2d$watch$2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1194,7 +1463,7 @@ function Home() {
                                 alt: "Comparison icon"
                             }, void 0, false, {
                                 fileName: "[project]/Documents/GitHub/iwts-bloom-watch/frontend/src/app/page.js",
-                                lineNumber: 55,
+                                lineNumber: 58,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$GitHub$2f$iwts$2d$bloom$2d$watch$2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -1204,19 +1473,19 @@ function Home() {
                                 children: "Comparison"
                             }, void 0, false, {
                                 fileName: "[project]/Documents/GitHub/iwts-bloom-watch/frontend/src/app/page.js",
-                                lineNumber: 60,
+                                lineNumber: 63,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/Documents/GitHub/iwts-bloom-watch/frontend/src/app/page.js",
-                        lineNumber: 54,
+                        lineNumber: 57,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/Documents/GitHub/iwts-bloom-watch/frontend/src/app/page.js",
-                lineNumber: 24,
+                lineNumber: 27,
                 columnNumber: 7
             }, this),
             showCompareModal && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$GitHub$2f$iwts$2d$bloom$2d$watch$2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1232,7 +1501,7 @@ function Home() {
                                     children: "Choose Comparison Mode"
                                 }, void 0, false, {
                                     fileName: "[project]/Documents/GitHub/iwts-bloom-watch/frontend/src/app/page.js",
-                                    lineNumber: 74,
+                                    lineNumber: 77,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$GitHub$2f$iwts$2d$bloom$2d$watch$2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -1241,13 +1510,13 @@ function Home() {
                                     children: "✕"
                                 }, void 0, false, {
                                     fileName: "[project]/Documents/GitHub/iwts-bloom-watch/frontend/src/app/page.js",
-                                    lineNumber: 77,
+                                    lineNumber: 80,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/Documents/GitHub/iwts-bloom-watch/frontend/src/app/page.js",
-                            lineNumber: 73,
+                            lineNumber: 76,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$GitHub$2f$iwts$2d$bloom$2d$watch$2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1258,7 +1527,7 @@ function Home() {
                                     children: "Date Range"
                                 }, void 0, false, {
                                     fileName: "[project]/Documents/GitHub/iwts-bloom-watch/frontend/src/app/page.js",
-                                    lineNumber: 86,
+                                    lineNumber: 89,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$GitHub$2f$iwts$2d$bloom$2d$watch$2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1274,7 +1543,7 @@ function Home() {
                                             className: "block w-full px-3 py-2 border border-gray-300 rounded-md"
                                         }, void 0, false, {
                                             fileName: "[project]/Documents/GitHub/iwts-bloom-watch/frontend/src/app/page.js",
-                                            lineNumber: 90,
+                                            lineNumber: 93,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$GitHub$2f$iwts$2d$bloom$2d$watch$2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -1287,19 +1556,19 @@ function Home() {
                                             className: "block w-full px-3 py-2 border border-gray-300 rounded-md"
                                         }, void 0, false, {
                                             fileName: "[project]/Documents/GitHub/iwts-bloom-watch/frontend/src/app/page.js",
-                                            lineNumber: 98,
+                                            lineNumber: 101,
                                             columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/Documents/GitHub/iwts-bloom-watch/frontend/src/app/page.js",
-                                    lineNumber: 89,
+                                    lineNumber: 92,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/Documents/GitHub/iwts-bloom-watch/frontend/src/app/page.js",
-                            lineNumber: 85,
+                            lineNumber: 88,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$GitHub$2f$iwts$2d$bloom$2d$watch$2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1317,7 +1586,7 @@ function Home() {
                                     children: "🌍 Global NDVI Comparison"
                                 }, void 0, false, {
                                     fileName: "[project]/Documents/GitHub/iwts-bloom-watch/frontend/src/app/page.js",
-                                    lineNumber: 110,
+                                    lineNumber: 113,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$GitHub$2f$iwts$2d$bloom$2d$watch$2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -1332,7 +1601,7 @@ function Home() {
                                     children: "📍 Compare Two Points"
                                 }, void 0, false, {
                                     fileName: "[project]/Documents/GitHub/iwts-bloom-watch/frontend/src/app/page.js",
-                                    lineNumber: 119,
+                                    lineNumber: 122,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$GitHub$2f$iwts$2d$bloom$2d$watch$2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -1342,29 +1611,33 @@ function Home() {
                                             dateRange
                                         });
                                         setShowCompareModal(false);
+                                        setShowGraph((prev)=>{
+                                            const next = !prev;
+                                            return next;
+                                        });
                                     },
                                     className: "px-6 py-4 bg-purple-500 text-white rounded-lg hover:bg-purple-600 font-semibold transition-colors",
                                     children: "📊 Export Analysis Charts"
                                 }, void 0, false, {
                                     fileName: "[project]/Documents/GitHub/iwts-bloom-watch/frontend/src/app/page.js",
-                                    lineNumber: 128,
+                                    lineNumber: 131,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/Documents/GitHub/iwts-bloom-watch/frontend/src/app/page.js",
-                            lineNumber: 109,
+                            lineNumber: 112,
                             columnNumber: 13
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/Documents/GitHub/iwts-bloom-watch/frontend/src/app/page.js",
-                    lineNumber: 72,
+                    lineNumber: 75,
                     columnNumber: 11
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/Documents/GitHub/iwts-bloom-watch/frontend/src/app/page.js",
-                lineNumber: 71,
+                lineNumber: 74,
                 columnNumber: 9
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$GitHub$2f$iwts$2d$bloom$2d$watch$2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$GitHub$2f$iwts$2d$bloom$2d$watch$2f$frontend$2f$src$2f$app$2f$BloomingMap$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
@@ -1372,22 +1645,68 @@ function Home() {
                 onResetCompareMode: handleResetCompareMode
             }, void 0, false, {
                 fileName: "[project]/Documents/GitHub/iwts-bloom-watch/frontend/src/app/page.js",
-                lineNumber: 142,
+                lineNumber: 149,
                 columnNumber: 7
             }, this),
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$GitHub$2f$iwts$2d$bloom$2d$watch$2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(NDVIChart, {}, void 0, false, {
+            showGraph ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$GitHub$2f$iwts$2d$bloom$2d$watch$2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "fixed top-40 inset-auto flex-col text-center align-center justify-center w-150 h-[400px] p-4 pb-15 bg-white rounded-2xl shadow-md",
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$GitHub$2f$iwts$2d$bloom$2d$watch$2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "flex w-full justify-between mb-3",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$GitHub$2f$iwts$2d$bloom$2d$watch$2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                className: "px-3 py-1 bg-highlight text-white font-semibold rounded-3xl",
+                                onClick: ()=>setShowGraph(false),
+                                children: "Close"
+                            }, void 0, false, {
+                                fileName: "[project]/Documents/GitHub/iwts-bloom-watch/frontend/src/app/page.js",
+                                lineNumber: 157,
+                                columnNumber: 13
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$GitHub$2f$iwts$2d$bloom$2d$watch$2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
+                                className: "font-bold text-primary mt-3",
+                                children: "NDVI Value Chart"
+                            }, void 0, false, {
+                                fileName: "[project]/Documents/GitHub/iwts-bloom-watch/frontend/src/app/page.js",
+                                lineNumber: 163,
+                                columnNumber: 13
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$GitHub$2f$iwts$2d$bloom$2d$watch$2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                className: "px-3 py-1 bg-primary text-white font-semibold rounded-3xl",
+                                onClick: ()=>chartRef.current?.exportToPNG(),
+                                children: "Export Graph"
+                            }, void 0, false, {
+                                fileName: "[project]/Documents/GitHub/iwts-bloom-watch/frontend/src/app/page.js",
+                                lineNumber: 164,
+                                columnNumber: 13
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/Documents/GitHub/iwts-bloom-watch/frontend/src/app/page.js",
+                        lineNumber: 156,
+                        columnNumber: 11
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$GitHub$2f$iwts$2d$bloom$2d$watch$2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$GitHub$2f$iwts$2d$bloom$2d$watch$2f$frontend$2f$src$2f$app$2f$chart$2f$NDVIChart$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
+                        ref: chartRef
+                    }, void 0, false, {
+                        fileName: "[project]/Documents/GitHub/iwts-bloom-watch/frontend/src/app/page.js",
+                        lineNumber: 171,
+                        columnNumber: 11
+                    }, this)
+                ]
+            }, void 0, true, {
                 fileName: "[project]/Documents/GitHub/iwts-bloom-watch/frontend/src/app/page.js",
-                lineNumber: 147,
-                columnNumber: 7
-            }, this)
+                lineNumber: 155,
+                columnNumber: 9
+            }, this) : null
         ]
     }, void 0, true, {
         fileName: "[project]/Documents/GitHub/iwts-bloom-watch/frontend/src/app/page.js",
-        lineNumber: 22,
+        lineNumber: 25,
         columnNumber: 5
     }, this);
 }
 }),
 ];
 
-//# sourceMappingURL=%5Broot-of-the-server%5D__b26c75df._.js.map
+//# sourceMappingURL=%5Broot-of-the-server%5D__6ea59cd2._.js.map

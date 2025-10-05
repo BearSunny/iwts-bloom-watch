@@ -1,17 +1,21 @@
 "use client";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import BloomingMap from "./BloomingMap";
 import React from "react";
 import SideBar from "./sideBar.js";
+import NDVIChart from "./chart/NDVIChart";
 
 export default function Home() {
   const [showSpecies, setShowSpecies] = useState(false);
   const [showCompareModal, setShowCompareModal] = useState(false);
   const [compareMode, setCompareMode] = useState(null);
+  const [showGraph, setShowGraph] = useState(false);
   const [dateRange, setDateRange] = useState({
     start: "2024-01-01",
     end: "2024-12-31",
   });
+  const chartRef = useRef(null);
+
 
   const handleResetCompareMode = () => {
     setCompareMode(null);
@@ -128,6 +132,10 @@ export default function Home() {
                 onClick={() => {
                   setCompareMode({ type: "export", dateRange });
                   setShowCompareModal(false);
+                  setShowGraph((prev) => {
+                    const next = !prev;
+                    return next;
+                  });
                 }}
                 className="px-6 py-4 bg-purple-500 text-white rounded-lg hover:bg-purple-600 font-semibold transition-colors"
               >
@@ -142,6 +150,27 @@ export default function Home() {
         compareMode={compareMode}
         onResetCompareMode={handleResetCompareMode}
       />
+
+      {showGraph ? (
+        <div className="fixed top-40 inset-auto flex-col text-center align-center justify-center w-150 h-[400px] p-4 pb-15 bg-white rounded-2xl shadow-md">
+          <div className="flex w-full justify-between mb-3">
+            <button
+              className="px-3 py-1 bg-highlight text-white font-semibold rounded-3xl"
+              onClick={() => setShowGraph(false)}
+            >
+              Close
+            </button>
+            <h1 className="font-bold text-primary mt-3">NDVI Value Chart</h1>
+            <button
+              className="px-3 py-1 bg-primary text-white font-semibold rounded-3xl"
+              onClick={() => chartRef.current?.exportToPNG()}
+            >
+              Export Graph
+            </button>
+          </div>
+          <NDVIChart ref={chartRef} />
+        </div>
+      ) : null}
     </main>
   );
 }
